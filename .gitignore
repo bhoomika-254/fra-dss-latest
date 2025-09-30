@@ -5,7 +5,6 @@ __pycache__/
 *.pyo
 *.pyd
 .Python
-build/
 develop-eggs/
 dist/
 downloads/
@@ -23,8 +22,6 @@ wheels/
 MANIFEST
 
 # Production build
-/vanachitra-prototype/build/
-/fradss/react_build/
 
 # Environment variables
 .env
