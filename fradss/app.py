@@ -953,8 +953,6 @@ def react_fra_claims():
 if __name__ == '__main__':
     print("=== FRA WebGIS Integration Application ===")
     print("Starting FRA WebGIS server...")
-    print("Open your browser to: http://127.0.0.1:5001")
-    print("Press Ctrl+C to stop the server\n")
     
     # Check if output directory exists
     if not os.path.exists('output'):
@@ -971,9 +969,25 @@ if __name__ == '__main__':
         os.makedirs(STATIC_DIR)
         print("Created static directory")
     
+    # Check if React build directory exists
+    if not os.path.exists(REACT_BUILD_DIR):
+        print(f"Warning: React build directory '{REACT_BUILD_DIR}' not found!")
+        print("Make sure to run the build process first.")
+    
     # Generate FRA data if it doesn't exist
     if not os.path.exists(FRA_GEOJSON_FILE):
         print("Generating FRA data...")
-        os.system('python scripts/fra_webgis_generator.py')
+        try:
+            os.system('python scripts/fra_webgis_generator.py')
+        except:
+            print("Could not generate FRA data automatically")
     
-    app.run(debug=True, host='127.0.0.1', port=5001)
+    # Get port from environment variable (Railway sets this)
+    port = int(os.environ.get('PORT', 5001))
+    host = os.environ.get('HOST', '0.0.0.0')
+    debug = os.environ.get('FLASK_ENV', 'development') == 'development'
+    
+    print(f"Server starting on {host}:{port}")
+    print("Press Ctrl+C to stop the server\n")
+    
+    app.run(debug=debug, host=host, port=port)
