@@ -1,0 +1,12 @@
+{
+  "name": "fra-webgis",
+  "version": "1.0.0",
+  "description": "Forest Rights Act WebGIS Application",
+  "scripts": {
+    "build": "cd vanachitra-prototype && npm install && npm run build && mkdir -p ../fradss/react_build && cp -r build/* ../fradss/react_build/",
+    "start": "cd fradss && python app.py"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

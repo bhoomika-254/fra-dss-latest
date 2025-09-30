@@ -1,1 +1,1 @@
-web: cd fradss && python app.py
+web: npm run build && npm start

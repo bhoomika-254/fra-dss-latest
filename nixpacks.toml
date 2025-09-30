@@ -1,11 +1,8 @@
 [phases.setup]
-nixPkgs = ["nodejs-18_x", "python310", "python310Packages.pip"]
+nixPkgs = ["nodejs-18_x"]
 
 [phases.install]
-cmds = [
-    "cd vanachitra-prototype && npm install",
-    "cd fradss && pip install -r requirements.txt"
-]
+cmds = ["cd vanachitra-prototype && npm install"]
 
 [phases.build]
 cmds = [
