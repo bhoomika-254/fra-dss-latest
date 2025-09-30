@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -80,12 +81,13 @@ const Upload = () => {
             survey_number: "67/2B",
             status: "Approved",
             approval_date: "2024-02-10",
-            patta_number: "FRA/UN/2024/004",
-            geometry: {
-                type: "Polygon",
                 coordinates: [[[92.0234, 24.3167], [92.0267, 24.3167], [92.0267, 24.3200], [92.0234, 24.3200], [92.0234, 24.3167]]]
             }
         }
+    };
+
+    const goBack = () => {
+        navigate('/');
     };
 
     useEffect(() => {
@@ -94,42 +96,6 @@ const Upload = () => {
         if (uploadPage) {
             uploadPage.style.opacity = '0';
             uploadPage.style.transform = 'translateY(20px)';
-            
-            setTimeout(() => {
-                uploadPage.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                uploadPage.style.opacity = '1';
-                uploadPage.style.transform = 'translateY(0)';
-            }, 100);
-        }
-
-        // Add keyboard shortcuts
-        const handleKeyDown = (e) => {
-            // Escape key to go back
-            if (e.key === 'Escape') {
-                goBack();
-            }
-            
-            // Enter key to process files if ready
-            if (e.key === 'Enter' && pdfFile && shapeFile && !processing) {
-                processFiles();
-            }
-        };
-
-        document.addEventListener('keydown', handleKeyDown);
-
-        return () => {
-            document.removeEventListener('keydown', handleKeyDown);
-        };
-    }, [pdfFile, shapeFile, processing]);
-
-    const goBack = () => {
-        navigate('/');
-    };
-
-    const handleFileSelect = (file, type) => {
-        // Validate file type
-        let isValidFile = false;
-        if (type === 'pdf' && file.type === 'application/pdf') {
             isValidFile = true;
         } else if (type === 'shape' && (file.name.endsWith('.shp') || file.name.endsWith('.zip') || file.type === 'application/zip')) {
             isValidFile = true;
@@ -318,19 +284,20 @@ const Upload = () => {
                             <FileUploadArea type="shape" file={shapeFile} onFileSelect={handleFileSelect} />
                         </div>
                     </div>
-
                     {/* Process Button */}
                     <div className="process-section">
                         <button 
                             className={`process-btn ${processing ? 'processing' : ''}`}
-                            onClick={processFiles} 
-                            disabled={!pdfFile || !shapeFile || processing}
                             style={{
                                 opacity: (pdfFile && shapeFile && !processing) ? '1' : '0.5',
                                 cursor: (pdfFile && shapeFile && !processing) ? 'pointer' : 'not-allowed'
                             }}
+                            onClick={processFiles} 
+                            disabled={!pdfFile || !shapeFile || processing}
+                            onKeyDown={handleKeyDown}
+                            ref={processBtnRef}
                         >
-                            <span className="btn-icon">{processing ? '🔄' : (pdfFile && shapeFile) ? '🚀' : '🔄'}</span>
+{{ ... }}
                             {processing ? 'Processing with AI...' : 'Process Documents with AI'}
                         </button>
                         <p className="process-note">AI will extract data using OCR and NER technologies</p>
