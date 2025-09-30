@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: fra-webgis
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: |
+      cd vanachitra-prototype && 
+      npm install && 
+      npm run build && 
+      cd .. && 
+      mkdir -p fradss/react_build && 
+      cp -r vanachitra-prototype/build/* fradss/react_build/ && 
+      pip install -r requirements.txt
+    startCommand: cd fradss && python app.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.12
