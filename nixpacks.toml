@@ -1,10 +1,14 @@
-[providers]
-python = "3.10"
-nodejs = "18"
+[phases.setup]
+nixPkgs = ["nodejs-18_x", "python310"]
+
+[phases.install]
+cmds = [
+    "cd vanachitra-prototype && npm install"
+]
 
 [phases.build]
 cmds = [
-    "cd vanachitra-prototype && npm install && npm run build",
+    "cd vanachitra-prototype && npm run build",
     "mkdir -p fradss/react_build",
     "cp -r vanachitra-prototype/build/* fradss/react_build/"
 ]
